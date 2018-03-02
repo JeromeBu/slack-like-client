@@ -3,6 +3,8 @@ dotenv.config();
 
 const ENV = process.env.NODE_ENV;
 
+console.log("Env is :", ENV);
+
 const config = {
   URL: "http://localhost:3000",
   API_URL: "http://localhost:3001"
