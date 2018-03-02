@@ -25,6 +25,7 @@ class UserInput extends React.Component {
     this.props.handleNewMessage({
       text: this.state.input,
       createdAt: new Date(),
+      channel: this.props.channel,
       user: this.props.user
     });
   };

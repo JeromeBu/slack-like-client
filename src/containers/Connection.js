@@ -1,7 +1,5 @@
 import React from "react";
 import ConnectionForm from "../components/connection/ConnectionForm";
-import { subscribeToTimer, userConnection } from "../api/api.js";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import config from "../config";
 

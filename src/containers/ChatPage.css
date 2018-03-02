@@ -61,23 +61,32 @@ p.subtitle {
   padding: 20px;
   height: var(--input-block-height);
   padding-top: 1px;
-  width: 100%;
+  width: 80%;
   background-color: var(--discussion-background);
   position: fixed;
   bottom: 0;
 }
 
 .discussion-container input {
+  box-sizing: border-box;
   padding: 5px 15px;
   border: 2px solid rgb(165, 165, 165);
   border-radius: 5px;
   line-height: 25px;
   font-size: 14px;
-  width: 300px;
+  width: 100%;
   color: rgb(100, 100, 100);
 }
 
 .discussion-container input:focus {
   outline: none;
   border: 2px solid rgb(56, 56, 56);
+}
+
+.channel-name {
+  line-height: 20px;
+}
+.channel-name:hover {
+  cursor: pointer;
+  color: gray;
 }

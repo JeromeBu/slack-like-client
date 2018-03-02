@@ -21,6 +21,7 @@ class Discussion extends React.Component {
         </div>
         <div className="input-spacer" />
         <UserInput
+          channel={this.props.channel}
           handleNewMessage={this.props.handleNewMessage}
           user={this.props.user}
         />
