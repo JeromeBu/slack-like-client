@@ -1,7 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-const ENV = process.env.NODE_ENV;
+const ENV = process.env.NODE_ENV || "development";
 
 console.log("Env is :", ENV);
 
