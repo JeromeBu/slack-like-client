@@ -1,0 +1,80 @@
+:root {
+  --input-block-height: 40px;
+  --channel-header-height: 60px;
+  /* var(--input-block-height) */
+}
+
+.slack {
+  height: 100%;
+}
+
+.side-bar {
+  background-color: #4a3a4b;
+  padding: 30px 15px;
+  width: 180px;
+  color: rgb(206, 206, 206);
+  font-weight: lighter;
+}
+
+.channels li {
+  padding-left: 10px;
+}
+
+p.subtitle {
+  padding: 10px 0;
+}
+
+.discussion-container {
+  width: 100%;
+}
+.channel-header {
+  padding: 20px 0;
+  position: fixed;
+  background-color: var(--border-grey);
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--channel-header-height);
+  border-bottom: 1px solid rgb(151, 151, 151);
+  color: rgb(48, 48, 48);
+}
+
+.channel-header-spacer {
+  height: var(--channel-header-height);
+}
+.channel-header-text {
+  padding: 0 30px;
+}
+
+.discussion {
+  padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-spacer {
+  height: var(--input-block-height);
+}
+.input-block {
+  padding: 20px;
+  height: var(--input-block-height);
+  padding-top: 1px;
+  width: 100%;
+  background-color: var(--discussion-background);
+  position: fixed;
+  bottom: 0;
+}
+
+.discussion-container input {
+  padding: 5px 15px;
+  border: 2px solid rgb(165, 165, 165);
+  border-radius: 5px;
+  line-height: 25px;
+  font-size: 14px;
+  width: 300px;
+  color: rgb(100, 100, 100);
+}
+
+.discussion-container input:focus {
+  outline: none;
+  border: 2px solid rgb(56, 56, 56);
+}

@@ -1,3 +1,67 @@
-.App {
-  text-align: center;
+:root {
+  --discussion-background: #f5f5f5;
+  --border-grey: rgb(231, 231, 231);
+  /* var(--deliveroo-blue); */
+  /* var(--border-grey); */
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  line-height: 19px;
+  color: #b1b1b1;
+  background-color: var(--discussion-background);
+}
+
+h1,
+h2 {
+  color: white;
+  font-weight: 600;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.container {
+  width: 1024px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.position-fixed {
+  position: fixed;
 }

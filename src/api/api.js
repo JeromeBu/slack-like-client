@@ -1,12 +1,16 @@
 import openSocket from "socket.io-client";
 const socket = openSocket("http://localhost:3001");
-function subscribeToTimer(cb) {
-  socket.on("timer", timestamp => cb(null, timestamp));
-  socket.emit("subscribeToTimer", 1000);
-}
-function connection(user, cb) {
-  socket.on("connection", user);
-  socket.emit("userConnection", user);
+
+function createNewMessage(message) {
+  console.log("socket function new message");
+  socket.emit("newMessage", message);
 }
 
-export { subscribeToTimer, connection };
+function listenToNewMessages(cb) {
+  socket.on("newMessageDisplay", function(data) {
+    console.log("Socket new message");
+    cb(null, data);
+  });
+}
+
+export { createNewMessage, listenToNewMessages };

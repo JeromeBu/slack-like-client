@@ -1,37 +1,54 @@
 import React, { Component } from "react";
+import "./reset.css";
 import "./App.css";
-import { subscribeToTimer, connection } from "./api/api.js";
-import ConnectionForm from "./components/ConnectionForm";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Connection from "./containers/Connection";
+import ChatPage from "./containers/ChatPage";
 
 class App extends Component {
   state = {
-    timestamp: "no timestamp yet",
-    user: { name: "no one is connected" }
+    user: { name: "Jérôme" }
   };
 
-  componentDidMount() {
-    subscribeToTimer((err, timestamp) =>
-      this.setState({
-        timestamp
-      })
-    );
-  }
-
-  handleClick = userName => {
-    this.setState({
-      user: { name: userName }
+  addConnectedUser = user => {
+    return new Promise((resolve, reject) => {
+      this.setState(
+        {
+          user
+        },
+        () => resolve()
+      );
     });
   };
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Slack like in react</h1>
-        </header>
-        <p>Time: {this.state.timestamp}</p>
-        <ConnectionForm user={this.state.user} handleClick={this.handleClick} />
-      </div>
+      <Router>
+        <div className="app">
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Connection
+                {...props}
+                user={this.state.user}
+                handleConnection={this.handleConnection}
+                addConnectedUser={this.addConnectedUser}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/chat_page"
+            render={props => <ChatPage {...props} user={this.state.user} />}
+          />
+          <Route
+            exact
+            path="/chat_page/:channel"
+            render={props => <ChatPage {...props} user={this.state.user} />}
+          />
+        </div>
+      </Router>
     );
   }
 }
