@@ -9,7 +9,8 @@ const config = {
 };
 
 if (ENV === "production") {
-  (config.URL = "production_url/"), (config.API_URL = "production_url/");
+  config.URL = "https://slack-like-jerome.herokuapp.com";
+  config.API_URL = "https://slack-like-server-jerome.herokuapp.com";
 }
 
 export default config;
