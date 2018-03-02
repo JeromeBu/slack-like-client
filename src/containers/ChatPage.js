@@ -4,6 +4,7 @@ import { createNewMessage, listenToNewMessages } from "../api/api.js";
 import axios from "axios";
 import Channels from "../components/chatpage/Channels";
 import "./ChatPage.css";
+import config from "../config";
 
 class ChatPage extends React.Component {
   state = {
@@ -12,15 +13,17 @@ class ChatPage extends React.Component {
 
   handleNewMessage = message => {
     createNewMessage(message);
-    console.log("Message in handleNewMessage : ", message);
   };
 
   componentDidMount() {
     axios
-      .get("http://localhost:3001/messages")
+      .get(`${config.API_URL}/messages`)
       .then(response => {
         console.log("Fetching messages from API");
         if (!response.data.error) {
+          this.props.addConnectedUser(
+            JSON.parse(localStorage.getItem(this.props.location.state.userName))
+          );
           this.setState({ messages: response.data.messages });
         } else {
           console.log(
@@ -32,20 +35,21 @@ class ChatPage extends React.Component {
       .catch(error => {
         console.log(error);
       });
+
     console.log("listening to messages...");
+
     listenToNewMessages((err, data) => {
       this.setState({ messages: [...this.state.messages, data] });
     });
   }
 
   render() {
-    console.log("user connected: ", this.props.user);
     return (
       <div className="flex-container slack">
         <div className="side-bar">
           <div className="position-fixed">
             <h1>Le reacteur :</h1>
-            <p>{this.props.user.name}</p>
+            <p>{this.props.user ? this.props.user.name : "Loading user"}</p>
             <br />
             <Channels />
           </div>

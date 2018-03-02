@@ -8,12 +8,14 @@ class UserInput extends React.Component {
   handleKeyDown = event => {
     if (event.keyCode === 13) {
       this.sendMessage();
+      this.setState({
+        input: ""
+      });
     }
   };
 
   handleChange = event => {
     const value = event.target.value;
-    console.log("in handle change. Input : ", value);
     this.setState({
       input: value
     });
@@ -36,7 +38,6 @@ class UserInput extends React.Component {
           value={this.state.input}
           onKeyDown={this.handleKeyDown}
         />
-        <button onClick={this.sendMessage}>Send</button>
       </div>
     );
   }

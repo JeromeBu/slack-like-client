@@ -1,5 +1,6 @@
 import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:3001");
+import config from "../config";
+const socket = openSocket(config.API_URL);
 
 function createNewMessage(message) {
   console.log("socket function new message");

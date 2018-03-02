@@ -7,7 +7,7 @@ import ChatPage from "./containers/ChatPage";
 
 class App extends Component {
   state = {
-    user: { name: "Jérôme" }
+    user: {}
   };
 
   addConnectedUser = user => {
@@ -40,12 +40,24 @@ class App extends Component {
           <Route
             exact
             path="/chat_page"
-            render={props => <ChatPage {...props} user={this.state.user} />}
+            render={props => (
+              <ChatPage
+                {...props}
+                user={this.state.user}
+                addConnectedUser={this.addConnectedUser}
+              />
+            )}
           />
           <Route
             exact
             path="/chat_page/:channel"
-            render={props => <ChatPage {...props} user={this.state.user} />}
+            render={props => (
+              <ChatPage
+                {...props}
+                user={this.state.user}
+                addConnectedUser={this.addConnectedUser}
+              />
+            )}
           />
         </div>
       </Router>

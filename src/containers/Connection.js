@@ -3,19 +3,28 @@ import ConnectionForm from "../components/connection/ConnectionForm";
 import { subscribeToTimer, userConnection } from "../api/api.js";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import config from "../config";
 
 class Connection extends React.Component {
   handleConnection = userName => {
     if (userName) {
       const user = { name: userName };
+      console.log("user sent to api", { user });
       axios
-        .post("http://localhost:3001/log_in", {
+        .post(`${config.API_URL}/log_in`, {
           user
         })
         .then(response => {
           if (!response.data.error) {
             this.props.addConnectedUser(response.data.user).then(() => {
-              this.props.history.push("/chat_page");
+              localStorage.setItem(
+                response.data.user.name,
+                JSON.stringify(response.data.user)
+              );
+              this.props.history.push({
+                pathname: "/chat_page",
+                state: { userName: response.data.user.name }
+              });
             });
           } else {
             console.log(
@@ -25,7 +34,7 @@ class Connection extends React.Component {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.log(error.response.data.join("\n"));
         });
     }
   };

@@ -5,11 +5,13 @@
 }
 
 .slack {
-  height: 100%;
+  min-height: 100vh;
 }
 
 .side-bar {
   background-color: #4a3a4b;
+  top: 0;
+  bottom: 0;
   padding: 30px 15px;
   width: 180px;
   color: rgb(206, 206, 206);
@@ -49,6 +51,7 @@ p.subtitle {
   padding: 30px;
   width: 100%;
   box-sizing: border-box;
+  justify-content: flex-end;
 }
 
 .input-spacer {

@@ -20,8 +20,6 @@ class ConnectionForm extends React.Component {
   };
 
   render() {
-    console.log("props in connection forme :", this.props);
-
     return (
       <div>
         <p>User connected : {this.props.user.name}</p>

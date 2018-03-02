@@ -13,7 +13,7 @@ class Message extends React.Component {
           <h6>
             {this.props.user.name}{" "}
             <span className="time-sent">
-              {format(this.props.user.createdAt, "HH:mm")}
+              {format(this.props.createdAt, "HH:mm")}
             </span>
           </h6>
           <p>{this.props.text}</p>
