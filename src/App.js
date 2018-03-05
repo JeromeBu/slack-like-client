@@ -14,8 +14,9 @@ class App extends Component {
     return new Promise((resolve, reject) => {
       this.setState(
         {
-          user
+          user: user
         },
+
         () => resolve()
       );
     });
@@ -33,17 +34,6 @@ class App extends Component {
                 {...props}
                 user={this.state.user}
                 handleConnection={this.handleConnection}
-                addConnectedUser={this.addConnectedUser}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/chat_page"
-            render={props => (
-              <ChatPage
-                {...props}
-                user={this.state.user}
                 addConnectedUser={this.addConnectedUser}
               />
             )}

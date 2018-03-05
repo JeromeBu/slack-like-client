@@ -85,8 +85,17 @@ p.subtitle {
 
 .channel-name {
   line-height: 20px;
+  border-radius: 5px;
 }
-.channel-name:hover {
+.channel-name a {
+  color: rgb(165, 165, 165);
+  display: inline-block;
+  width: 100%;
+}
+.channel-name a:hover {
   cursor: pointer;
   color: gray;
+}
+.channel-name.active {
+  background-color: rgb(131, 95, 95);
 }

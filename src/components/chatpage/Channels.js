@@ -6,12 +6,12 @@ class Channels extends React.Component {
     input: ""
   };
   handleClick = () => {
-    console.log("State on click : ", this.state.input);
-    console.log("channel handle :", this.props);
-    this.props.handleNewChannel({ name: this.state.input });
-    this.setState({
-      input: ""
-    });
+    if (this.state.input) {
+      this.props.handleNewChannel({ name: this.state.input });
+      this.setState({
+        input: ""
+      });
+    }
   };
   handleChange = event => {
     this.setState({
@@ -20,7 +20,17 @@ class Channels extends React.Component {
   };
   render() {
     const channels = this.props.channels.map((channel, index) => {
-      return <Channel name={channel.name} key={index} />;
+      return (
+        <Channel
+          channel={channel}
+          key={index}
+          changeActiveChannel={this.props.changeActiveChannel}
+          active={
+            this.props.activeChannel &&
+            this.props.activeChannel.name === channel.name
+          }
+        />
+      );
     });
     return (
       <ul className="channels">

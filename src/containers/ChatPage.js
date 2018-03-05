@@ -4,18 +4,37 @@ import {
   createNewMessage,
   listenToNewMessages,
   createNewChannel,
-  listenToNewChannels
+  listenToNewChannels,
+  joinChannel
 } from "../api/api.js";
 import axios from "axios";
 import Channels from "../components/chatpage/Channels";
 import "./ChatPage.css";
 import config from "../config";
+import findIndex from "lodash/findIndex";
 
 class ChatPage extends React.Component {
   state = {
     messages: [],
     channels: [],
     activeChannel: {}
+  };
+
+  changeActiveChannel = channel => {
+    this.setState(
+      {
+        activeChannel: channel
+      },
+      function() {
+        console.log(
+          "Channel in changeActiveChannel : ",
+          this.state.activeChannel
+        );
+        const channelName = this.state.activeChannel.name;
+        this.fetchMessages(channelName);
+        joinChannel(channelName);
+      }
+    );
   };
 
   handleNewMessage = message => {
@@ -26,15 +45,14 @@ class ChatPage extends React.Component {
     createNewChannel(channel);
   };
 
-  componentDidMount() {
+  fetchMessages = channelName => {
     axios
-      .get(`${config.API_URL}/messages`)
+      .get(`${config.API_URL}/messages?channel=${channelName}`)
       .then(response => {
         console.log("Fetching messages from API");
+        console.log("Messages :", response.data);
+
         if (!response.data.error) {
-          // this.props.addConnectedUser(
-          //   JSON.parse(localStorage.getItem(this.props.location.state.userName))
-          // );
           this.setState({ messages: response.data.messages });
         } else {
           console.log(
@@ -46,16 +64,26 @@ class ChatPage extends React.Component {
       .catch(error => {
         console.log(error);
       });
+  };
+
+  componentDidMount() {
+    this.props.addConnectedUser(JSON.parse(sessionStorage.getItem("userName")));
+    const channelName = this.props.match.params.channel;
+
+    this.fetchMessages(channelName);
+
     axios
       .get(`${config.API_URL}/channels`)
       .then(response => {
         console.log("Fetching channels from API");
         if (!response.data.error) {
-          this.props.addConnectedUser(
-            JSON.parse(localStorage.getItem(this.props.location.state.userName))
-          );
           const channels = response.data.channels;
-          this.setState({ channels: channels, activeChannel: channels.first });
+          const index = findIndex(channels, { name: channelName });
+
+          this.setState({
+            channels: channels,
+            activeChannel: index >= 0 ? channels[index] : channels[0]
+          });
         } else {
           console.log(
             "TODO : signal error to user, error:",
@@ -76,9 +104,12 @@ class ChatPage extends React.Component {
     listenToNewChannels((err, data) => {
       this.setState({ channels: [...this.state.channels, data] });
     });
+
+    joinChannel(this.state.activeChannel.name);
   }
 
   render() {
+    console.log("chat page DID MOUNT, state : ", this.state);
     return (
       <div className="flex-container slack">
         <div className="side-bar">
@@ -89,6 +120,8 @@ class ChatPage extends React.Component {
             <Channels
               channels={this.state.channels}
               handleNewChannel={this.handleNewChannel}
+              changeActiveChannel={this.changeActiveChannel}
+              activeChannel={this.state.activeChannel}
             />
           </div>
         </div>

@@ -1,8 +1,10 @@
 import React from "react";
+import { listenToWriting, isWritingAMessage } from "../../api/api";
 
 class UserInput extends React.Component {
   state = {
-    input: ""
+    input: "",
+    isWriting: ""
   };
 
   handleKeyDown = event => {
@@ -16,17 +18,34 @@ class UserInput extends React.Component {
 
   handleChange = event => {
     const value = event.target.value;
-    this.setState({
-      input: value
-    });
+    this.setState(
+      {
+        input: value
+      },
+      function() {
+        if (this.state.input) {
+          isWritingAMessage(this.props.user);
+        } else {
+          this.setState({ isWriting: "" });
+        }
+      }
+    );
   };
 
   sendMessage = () => {
+    console.log("props in input", this.props);
+
     this.props.handleNewMessage({
       text: this.state.input,
       createdAt: new Date(),
       channel: this.props.channel,
       user: this.props.user
+    });
+  };
+
+  componentDidMount = () => {
+    listenToWriting((err, data) => {
+      this.setState({ isWriting: data });
     });
   };
 
@@ -39,6 +58,7 @@ class UserInput extends React.Component {
           value={this.state.input}
           onKeyDown={this.handleKeyDown}
         />
+        <p>{this.state.isWriting}</p>
       </div>
     );
   }

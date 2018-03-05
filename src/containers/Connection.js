@@ -15,12 +15,12 @@ class Connection extends React.Component {
         .then(response => {
           if (!response.data.error) {
             this.props.addConnectedUser(response.data.user).then(() => {
-              localStorage.setItem(
-                response.data.user.name,
+              sessionStorage.setItem(
+                "userName",
                 JSON.stringify(response.data.user)
               );
               this.props.history.push({
-                pathname: "/chat_page",
+                pathname: "/chat_page/general",
                 state: { userName: response.data.user.name }
               });
             });
@@ -32,6 +32,7 @@ class Connection extends React.Component {
           }
         })
         .catch(error => {
+          console.log(error);
           console.log(error.response.data.join("\n"));
         });
     }

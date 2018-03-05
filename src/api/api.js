@@ -13,9 +13,19 @@ function createNewChannel(channel) {
   socket.emit("newChannel", channel);
 }
 
+function isWritingAMessage(user) {
+  console.log("socket function is writing a message : ");
+  socket.emit("isWritting", user);
+}
+
+function joinChannel(channelName) {
+  console.log("socket function joining channel : ", channelName);
+  socket.emit("room", channelName);
+}
+
 function listenToNewChannels(cb) {
   socket.on("newChannelDisplay", function(data) {
-    console.log("Socket new channel display");
+    console.log("Socket new channel display, data : ", data);
     cb(null, data);
   });
 }
@@ -26,10 +36,19 @@ function listenToNewMessages(cb) {
     cb(null, data);
   });
 }
+function listenToWriting(cb) {
+  socket.on("showWriting", function(data) {
+    console.log("Socket someone showWriting a message");
+    cb(null, data);
+  });
+}
 
 export {
   createNewMessage,
   listenToNewMessages,
   createNewChannel,
-  listenToNewChannels
+  listenToNewChannels,
+  joinChannel,
+  listenToWriting,
+  isWritingAMessage
 };
